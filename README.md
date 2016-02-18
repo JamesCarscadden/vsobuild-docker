@@ -1,6 +1,13 @@
 # vsobuild-docker
 Docker commands for running VSTS Build Agent inside a docker container
 
+To Use
+docker pull ubuntu:14.04
+docker build -t jc/vsobuild:v1 .
+Edit runcommand.txt file
+sudo sh runcommand.txt
+
+
 See blog post on Road to ALM
 [Running a Visual Studio Build vNext agent in a Docker container](http://roadtoalm.com/2015/08/07/running-a-visual-studio-build-vnext-agent-in-a-docker-container/)
 and 
