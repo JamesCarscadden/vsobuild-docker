@@ -1,5 +1,5 @@
 #!/usr/bin/expect
-spawn node agent/vsoagent
+spawn ./run.sh
 expect "Enter alternate username" { send "$env(VSO_CONFIG_USERNAME)\n" }
 expect "Enter alternate password" { send "$env(VSO_CONFIG_PASSWORD)\n" }
 expect "Enter server url" { send "$env(VSO_CONFIG_URL)\n" }
