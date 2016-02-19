@@ -1,5 +1,5 @@
 FROM node
-MAINTAINER Jesper Veggerby <jesper@veggerby.com>
+MAINTAINER James Carscadden <james@carscadden.org>
 
 #env variables
 ENV VSO_CONFIG_USERNAME=""
@@ -12,14 +12,23 @@ ENV VSO_CONFIG_SERVICE_PASSWORD=vsoservice
 
 RUN apt-get update
 
+# Get Curl - it's needed for Node below and RVM
+RUN apt-get install curl -y
+
+# Add more up to date Node sources
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+
 # INSTALL Expect
 RUN apt-get install expect -y
 
 # INSTALL GIT
-RUN apt-get install nodejs-legacy -y
+RUN apt-get install git -y
+
+# INSTALL NODE JS
+RUN apt-get install nodejs -y
 
 # INSTALL VSO Agent
-RUN npm install vsoagent-installer bower gulp -g
+RUN npm install vsoagent-installer -g
 
 #CREATE SOME dirs
 RUN mkdir opt/buildagent

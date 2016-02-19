@@ -1,1 +1,1 @@
-docker run -t -i -e VSO_CONFIG_USERNAME=username -e VSO_CONFIG_PASSWORD=password -e VSO_CONFIG_URL=https://name.visualstudio.com -e VSO_CONFIG_URL=agentname dockerimagename:version 
+docker run -t -i -e VSO_CONFIG_USERNAME=username -e VSO_CONFIG_PASSWORD=password -e VSO_CONFIG_URL=https://name.visualstudio.com -e VSO_CONFIG_AGENTNAME=agentname dockerimagename:version 
