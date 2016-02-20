@@ -30,7 +30,7 @@ RUN apt-get install git -y
 RUN echo "deb https://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/postgres.list
 RUN curl -sL https://postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN apt-get update
-RUN apt-get install postgresql-9.5 postgresql-server-dev-9.5 -y
+RUN apt-get install postgresql-server-dev-9.5 -y
 
 # INSTALL NODE JS
 RUN apt-get install nodejs -y
