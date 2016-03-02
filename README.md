@@ -6,7 +6,12 @@ To Use
 
 ```
 docker pull jamescarscadden/vsts-agent-rails
-docker run -t --name vstsagent --link railsPostgres:postgres -e VSTS_CONFIG_USERNAME=<username> -e VSTS_CONFIG_PASSWORD=<password> -e VSTS_CONFIG_URL=<url for vsts> -e VSTS_CONFIG_AGENTNAME=<agent name> -d jamescarscadden/vsts-agent-rails
+docker run -t --name vstsagent --link railsPostgres:postgres \
+                -e VSTS_CONFIG_USERNAME=<username> \
+                -e VSTS_CONFIG_PASSWORD=<password> \
+                -e VSTS_CONFIG_URL=<url for vsts> \
+                -e VSTS_CONFIG_AGENTNAME=<agent name> \
+                -d jamescarscadden/vsts-agent-rails
 ```
 
 Fill in the parameters above with values for your own project.
