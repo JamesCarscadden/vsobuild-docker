@@ -2,13 +2,13 @@ FROM ubuntu:14.04
 MAINTAINER James Carscadden <james@carscadden.org>
 
 #env variables
-ENV VSO_CONFIG_USERNAME=""
-ENV VSO_CONFIG_PASSWORD=""
-ENV VSO_CONFIG_URL=""
-ENV VSO_CONFIG_AGENTNAME=$HOSTNAME
-ENV VSO_CONFIG_AGENTPOOL=default
-ENV VSO_CONFIG_SERVICE_USERNAME=vsoservice
-ENV VSO_CONFIG_SERVICE_PASSWORD=vsoservice
+ENV VSTS_CONFIG_USERNAME=""
+ENV VSTS_CONFIG_PASSWORD=""
+ENV VSTS_CONFIG_URL=""
+ENV VSTS_CONFIG_AGENTNAME=$HOSTNAME
+ENV VSTS_CONFIG_AGENTPOOL=default
+ENV VSTS_CONFIG_SERVICE_USERNAME=vstsservice
+ENV VSTS_CONFIG_SERVICE_PASSWORD=vstsservice
 
 # Prepare for software installs
 RUN apt-get update
@@ -39,14 +39,14 @@ RUN apt-get install nodejs -y
 RUN npm install bower -g
 
 # Create a service user
-RUN echo "${VSO_CONFIG_SERVICE_USERNAME}\n${VSO_CONFIG_SERVICE_PASSWORD}\n\n\n\n\n\n\n" | adduser ${VSO_CONFIG_SERVICE_USERNAME}
+RUN echo "${VSTS_CONFIG_SERVICE_USERNAME}\n${VSTS_CONFIG_SERVICE_PASSWORD}\n\n\n\n\n\n\n" | adduser ${VSTS_CONFIG_SERVICE_USERNAME}
 
 # Install the VSO Agent
-USER ${VSO_CONFIG_SERVICE_USERNAME}
+USER ${VSTS_CONFIG_SERVICE_USERNAME}
 
-WORKDIR /home/${VSO_CONFIG_SERVICE_USERNAME}
-RUN mkdir vsoagent
-WORKDIR /home/${VSO_CONFIG_SERVICE_USERNAME}/vsoagent
+WORKDIR /home/${VSTS_CONFIG_SERVICE_USERNAME}
+RUN mkdir vstsagent
+WORKDIR /home/${VSTS_CONFIG_SERVICE_USERNAME}/vstsagent
 RUN curl -skSL http://aka.ms/xplatagent | bash
 
 # INSTALL RVM
@@ -63,5 +63,5 @@ RUN /bin/bash -l -c "gem install bundler"
 COPY ConfigureAgent.expect ConfigureAgent.expect
 
 # Run the agent
-USER ${VSO_CONFIG_SERVICE_USERNAME}
-CMD /bin/bash -l -c "cd ~/vsoagent;expect ConfigureAgent.expect"
+USER ${VSTS_CONFIG_SERVICE_USERNAME}
+CMD /bin/bash -l -c "cd ~/vstsagent;expect ConfigureAgent.expect"

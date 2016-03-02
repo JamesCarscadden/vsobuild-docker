@@ -1,10 +1,10 @@
 #!/usr/bin/expect
 spawn ./run.sh
-expect "Enter alternate username" { send "$env(VSO_CONFIG_USERNAME)\n" }
-expect "Enter alternate password" { send "$env(VSO_CONFIG_PASSWORD)\n" }
-expect "Enter server url" { send "$env(VSO_CONFIG_URL)\n" }
-expect "Enter agent name" { send "$env(VSO_CONFIG_AGENTNAME)\n" }
-expect "Enter agent pool name" { send "$env(VSO_CONFIG_AGENTPOOL)\n" }
+expect "Enter alternate username" { send "$env(VSTS_CONFIG_USERNAME)\n" }
+expect "Enter alternate password" { send "$env(VSTS_CONFIG_PASSWORD)\n" }
+expect "Enter server url" { send "$env(VSTS_CONFIG_URL)\n" }
+expect "Enter agent name" { send "$env(VSTS_CONFIG_AGENTNAME)\n" }
+expect "Enter agent pool name" { send "$env(VSTS_CONFIG_AGENTPOOL)\n" }
 expect "Enter force basic" { send "\n" }
 
 interact
