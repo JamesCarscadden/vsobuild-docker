@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER James Carscadden <james@carscadden.org>
 
 #env variables
@@ -10,30 +10,50 @@ ENV VSTS_CONFIG_AGENTPOOL=default
 ENV VSTS_CONFIG_SERVICE_USERNAME=vstsservice
 ENV VSTS_CONFIG_SERVICE_PASSWORD=vstsservice
 
-# Prepare for software installs
-RUN apt-get update
-RUN apt-get install curl -y
+# supress debconf
+ENV DEBIAN_FRONTEND=noninteractive
 
-# install the prerequisite patches here so that rvm will install under non-root account.
-RUN apt-get install -y patch gawk g++ gcc make libc6-dev patch libreadline6-dev zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 autoconf libgdbm-dev libncurses5-dev automake libtool bison pkg-config libffi-dev unzip
+# Prepare for software installs
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates\
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # Add more up to date Node sources
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
-
-# INSTALL Expect
-RUN apt-get install expect -y
-
-# INSTALL GIT
-RUN apt-get install git -y
-
-# INSTALL postgres dev libraries for PG gem.
-RUN echo "deb https://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/postgres.list
+# Add more up to date Postgres sources
+RUN echo "deb https://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main" > /etc/apt/sources.list.d/postgres.list
 RUN curl -sL https://postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get update
-RUN apt-get install postgresql-server-dev-9.5 -y
 
-# INSTALL NODE JS
-RUN apt-get install nodejs -y
+# install the prerequisite patches here so that rvm will install under non-root account.
+RUN apt-get update && RUN apt-get install -y \
+    autoconf \
+    automake \
+    bison \
+    expect \
+    g++ \
+    gawk \
+    gcc \
+    git \
+    libc6-dev \
+    libffi-dev \
+    libgdbm-dev \
+    libncurses5-dev \
+    libreadline6-dev \
+    libsqlite3-dev \
+    libssl-dev \
+    libtool \
+    libyaml-dev \
+    make \
+    nodejs \
+    patch \
+    patch \
+    pkg-config \
+    postgresql-server-dev-9.5 \
+    sqlite3 \
+    unzip
+    zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # INSTALL bower
 RUN npm install bower -g
@@ -54,8 +74,8 @@ RUN gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A170311380
 RUN /bin/bash -l -c "curl -sSL https://get.rvm.io | bash -s stable"
 
 # GET Ruby
-RUN /bin/bash -l -c "rvm install 2.2"
-RUN /bin/bash -l -c "rvm --default use 2.2"
+RUN /bin/bash -l -c "rvm install 2.3"
+RUN /bin/bash -l -c "rvm --default use 2.3"
 
 # GET Bundler
 RUN /bin/bash -l -c "gem install bundler"
